@@ -1,0 +1,12 @@
+[Unit]
+Description=Hello Service. This service says hello to the user in /tmp/hello.log every few seconds.
+
+[Service]
+EnvironmentFile=/var/hello-environment.properties
+PIDFile=/var/run/hello.pid
+ExecStart=/opt/hello/start.sh
+ExecStop=/opt/hello/stop.sh
+Type=forking
+
+[Install]
+WantedBy=default.target
