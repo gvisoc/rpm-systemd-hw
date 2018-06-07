@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/kill -15 `cat /var/run/hello.pid`
+java -cp /opt/hello:/opt/hello/* com.gvisoc.hello.Stop
