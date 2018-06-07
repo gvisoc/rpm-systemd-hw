@@ -6,8 +6,11 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.management.*;
+import java.io.*;
+import java.lang.management.ManagementFactory;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,37 +20,12 @@ import java.util.TimerTask;
  */
 public class Service extends TimerTask {
     static Logger LOGGER = LoggerFactory.getLogger(Service.class);
-    private static final long DEFAULT_DELAY = 5000;
-    private static final String DEFAULT_NAME = "World";
-    private Configuration config;
-    private long delay = -1;
     private String name = null;
 
-    public Service() {
-        Configurations configs = new Configurations();
-        try {
-            config = configs.properties(
-                    getClass()
-                            .getClassLoader()
-                            .getResource("application.properties")
-                            .getFile());
-            delay = config.getLong("delay");
-            name = config.getString("name");
-        } catch (ConfigurationException e) {
-            LOGGER.warn("Warning: no file \"application.properties\" in the classpath, using defaults");
-        }
-        finally {
-            if (delay == -1)
-                delay = DEFAULT_DELAY;
-            if (name == null  || "".equals(name)) {
-                name = DEFAULT_NAME;
-            }
-        }
+    public Service(String name) {
+        this.name = name;
     }
 
-    public long getDelay() {
-        return delay;
-    }
 
     /**
      * Logs to /tmp/hello.log
@@ -61,40 +39,80 @@ public class Service extends TimerTask {
      * @param args -- the optional delay to run the service. Defaults to 5 sec.
      */
     public static void main(String[] args) {
-        Service instance = new Service();
-        final String semaphore = "";
-        final Timer timer = new Timer();
-        long delay = instance.getDelay();
+        String name = null;
+        long delay = -1;
+
+
+        Configuration config = getConfig();
+        if (config != null) {
+            delay = config.getLong("delay", 5000);
+            name = config.getString("name", "World");
+        }
+
+        Service instance = new Service(name);
+
         LOGGER.debug("Scheduling greeting service with delay (ms): " + delay);
+        Timer timer = new Timer();
         timer.schedule(instance, delay, delay);
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                // Executed when kill -10 (SIGUSR1) in Linux, -30 in macOS.
-                LOGGER.info("Exiting");
-                LOGGER.debug("Signal to shutdown -- Gracefully shutting down");
-                timer.cancel();
-                synchronized (semaphore) {
-                    semaphore.notify();
+
+        int status = waitForStop();
+        LOGGER.debug("Exiting with status: " + status);
+        timer.cancel();
+        System.exit(status);
+    }
+
+    private static int waitForStop() {
+        int status;
+        final String semaphore = "";
+        StopMonitor monitor = new StopMonitor(semaphore);
+        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name = null;
+        try {
+            name = new ObjectName("com.gvisoc:type=StopMonitor");
+            server.registerMBean(monitor, name);
+            synchronized (semaphore) {
+                try {
+                    LOGGER.debug("Wait for exit command");
+                    semaphore.wait();
+                    status = 0;
+                } catch (InterruptedException e) {
+                    LOGGER.debug("Wait cancelled by system signal -- Abnormal exit");
+                    status = 1;
                 }
             }
-        });
-        try {
-            synchronized (semaphore) {
-                semaphore.wait();
-            }
-        } catch (InterruptedException e) {
-
-        }
-        try {
-            Thread.currentThread().join();
-        } catch (InterruptedException e) {
+        } catch (MalformedObjectNameException e) {
             e.printStackTrace();
+            LOGGER.error("Malformed object name. Exiting...");
+            e.printStackTrace();
+            status = 2;
+        } catch (InstanceAlreadyExistsException e) {
+            LOGGER.error("Instance already exists. Exiting...");
+            e.printStackTrace();
+            status = 3;
+        } catch (MBeanRegistrationException e) {
+            LOGGER.error("Error registrating stop listener. Exiting...");
+            e.printStackTrace();
+            status = 4;
+        } catch (NotCompliantMBeanException e) {
+            LOGGER.error("Non-Compliant MBean. Exiting...");
+            e.printStackTrace();
+            status = 5;
         }
-        // BUG (own): This is currently ignored and the process exits with code 143 (killed)
-        // To properly integrate with systemd we should be able to exit with 0.
-        // To be done with sockets and TCP messages, or frameworks (not plain Java -- Spring something?).
-        // At least the code ends gracefully.
-        System.exit(0);
+        return status;
+    }
+
+    private static Configuration getConfig() {
+        Configurations configs = new Configurations();
+        Configuration config = null;
+        try {
+            config = configs.properties(
+                    Service.class
+                            .getClassLoader()
+                            .getResource("application.properties")
+                            .getFile());
+        } catch (ConfigurationException e) {
+            LOGGER.warn("Warning: no file \"application.properties\" in the classpath, using defaults");
+        }
+        return config;
     }
 }
