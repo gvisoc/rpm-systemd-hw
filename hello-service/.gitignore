@@ -50,3 +50,8 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+# Maven
+# Maven
+log/
+target/
