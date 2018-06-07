@@ -11,33 +11,34 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 public class Stop  {
-    static Logger LOGGER = LoggerFactory.getLogger(Service.class);
+    static Logger LOGGER = LoggerFactory.getLogger(Stop.class);
+    //ToDo: an enum for these, common for Start and Stop.
+    private static final int SYSTEM_OK = 0;
+    private static final int SYSTEM_ERROR_JMX = 6;
+
     public static void main(String[] args)
     {
+        int status;
         try
         {
-            // connecting to JMX
             LOGGER.info("Connect to JMX service.");
-            //System.out.println("Connect to JMX service.");
             JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://:9999/jmxrmi");
             JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
             MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
 
-            // Construct proxy for the the MBean object
             ObjectName mbeanName = new ObjectName("com.gvisoc:type=StopMonitor");
             StopMonitorMBean mbeanProxy = JMX.newMBeanProxy(mbsc, mbeanName, StopMonitorMBean.class, true);
 
             LOGGER.info("Connected.");
-            //System.out.println("Connected.");
             mbeanProxy.stop();
-            //jmxc.close();
             LOGGER.info("Done.");
-            //System.out.println("Done");
+            status = SYSTEM_OK;
         }
         catch(Exception e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error("Caught JMX Error: ", e);
+            status = SYSTEM_ERROR_JMX;
         }
+        System.exit(status);
     }
 }

@@ -56,7 +56,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.gvisoc.hello.Service</mainClass>
+                    <mainClass>com.gvisoc.hello.task.HelloTask</mainClass>
                 </configuration>
             </plugin>
             <plugin>
