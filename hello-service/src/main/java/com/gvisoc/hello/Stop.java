@@ -1,5 +1,8 @@
 package com.gvisoc.hello;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -8,14 +11,14 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 public class Stop  {
-    //static Logger LOGGER = LoggerFactory.getLogger(Service.class);
+    static Logger LOGGER = LoggerFactory.getLogger(Service.class);
     public static void main(String[] args)
     {
         try
         {
             // connecting to JMX
-            //LOGGER.info("Connect to JMX service.");
-            System.out.println("Connect to JMX service.");
+            LOGGER.info("Connect to JMX service.");
+            //System.out.println("Connect to JMX service.");
             JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://:9999/jmxrmi");
             JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
             MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
@@ -24,12 +27,12 @@ public class Stop  {
             ObjectName mbeanName = new ObjectName("com.gvisoc:type=StopMonitor");
             StopMonitorMBean mbeanProxy = JMX.newMBeanProxy(mbsc, mbeanName, StopMonitorMBean.class, true);
 
-            //LOGGER.info("Connected.");
-            System.out.println("Connected.");
+            LOGGER.info("Connected.");
+            //System.out.println("Connected.");
             mbeanProxy.stop();
             //jmxc.close();
-            //LOGGER.info("Done.");
-            System.out.println("Done");
+            LOGGER.info("Done.");
+            //System.out.println("Done");
         }
         catch(Exception e)
         {
