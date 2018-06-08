@@ -48,7 +48,7 @@ The file reponsible for the configuration is `hello-service/pom.xml` and uses Mo
 ## References
 Check this material:
 
-1. [MojoHaus´ RPM Plugin](https://www.mojohaus.org/rpm-maven-plugin/)
+1. [MojoHaus' RPM Plugin](https://www.mojohaus.org/rpm-maven-plugin/)
 2. [systemd unit file reference](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files)
 3. For further steps and check / improve portability, check [systemd unit packaging](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files)
 
