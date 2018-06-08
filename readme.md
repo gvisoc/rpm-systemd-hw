@@ -52,7 +52,7 @@ Check this material:
 
 ## Limitations
 * No Java Tests (sorry). The focus of this repo is the RPM and systemd part.
-* No SSL JMX communications. This is not a *real* problem for this code because the `stop()` exposed operation has no parameters (hence no information had to be encrypted) and, regarding the authenticated execution, no one else than a system administrator should have access to the stop command or the machine to run `jconsole`.
+* No SSL JMX communications. This is not a *real* problem for this code because the `stop()` exposed operation has no parameters (hence no information had to be encrypted) and, regarding the authenticated execution, no one else than a system administrator should have access to the stop command or the machine to run `jconsole`. In other words, that problem has been left to the system administrators regarding users and permissions. No drama as any of them can always run kill.
 * There is (a little) room for unexpected results when running similar code in a CI/CD pipeline or in a proper Red Hat Linux system, as the RPM was created in a Mac by installing `rpm` with Homebrew with `brew install rpm`. It should run OK, but please fill a bug if it doesn't.
 * The result was tested only in CentOS 7.
 * No further limitations other than those derived from the design itself, and Windows rpm building. Although not tested / explored, this last can be done with a Cygwin environment or similar, or even with Ubuntu for Windows if you have Windows 10. 
