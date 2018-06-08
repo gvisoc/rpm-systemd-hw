@@ -18,7 +18,7 @@ Two scripts are located under `hello-service/src/main/resources`: `start.sh` and
 The unit file is located under `hello-service/src/systemd`: `hello.service`.
 
 ### RPM configuration
-The file reponsible for the configuration is `hello-service/pom.xml` and uses Codehaus' `rpm-maven-plugin`.
+The file reponsible for the configuration is `hello-service/pom.xml` and uses MojoHaus' `rpm-maven-plugin`.
 
 ## Use
 1. Build the project and create the RPM package by executing the usual Maven tasks, `mvn clen compile package`
@@ -44,6 +44,13 @@ The file reponsible for the configuration is `hello-service/pom.xml` and uses Co
 19:07:19.132 [Thread-2] DEBUG com.gvisoc.hello.Service - Signal to shutdown -- Gracefully shutting down
 ```
 8. Check the service status with `sudo systemctl status hello.service -l`.
+
+## References
+Check this material:
+
+1. [MojoHaus´ RPM Plugin](https://www.mojohaus.org/rpm-maven-plugin/)
+2. [systemd unit file reference](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files)
+3. For further steps and check / improve portability, check [systemd unit packaging](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files)
 
 ## Limitations
 There is room for unexpected results as the RPM was created in a Mac by installing `rpm` with Homebrew:
