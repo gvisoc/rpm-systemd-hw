@@ -29,19 +29,17 @@ The file reponsible for the configuration is `hello-service/pom.xml` and uses Mo
 6. Check the output of the service with `tail -f /tmp/hello.log`:
 
 ```
-19:06:18.054 [com.gvisoc.hello.Service.main()] DEBUG com.gvisoc.hello.Service - Scheduling greeting service with delay (ms): 3000
-19:06:21.060 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
-19:06:24.063 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
-19:06:27.066 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
-19:06:30.070 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
-19:06:33.071 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
-19:06:36.076 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
+10:26:07.603 [com.gvisoc.hello.Start.main()] DEBUG com.gvisoc.hello.Start - Scheduling greeting service with delay (ms): 3000
+10:26:07.667 [com.gvisoc.hello.Start.main()] DEBUG com.gvisoc.hello.Start - Wait for exit command
+10:26:10.612 [Timer-0] INFO  com.gvisoc.hello.task.HelloTask - Hello, gvisoc!
+10:26:13.612 [Timer-0] INFO  com.gvisoc.hello.task.HelloTask - Hello, gvisoc!
+10:26:16.611 [Timer-0] INFO  com.gvisoc.hello.task.HelloTask - Hello, gvisoc!
+10:26:19.613 [Timer-0] INFO  com.gvisoc.hello.task.HelloTask - Hello, gvisoc!
 ```
-7. Restart the service with `sudo sytemctl restart hello`. Stop the service with `sudo systemctl stop hello`. Check the result in the log:
+7. Restart the service with `sudo sytemctl restart hello`. Stop the service with `sudo systemctl stop hello`. Check the result in the log (more logs from the `Stop` command may appear):
 ```
-19:07:18.116 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
-19:07:19.132 [Thread-2] INFO  com.gvisoc.hello.Service - Exiting
-19:07:19.132 [Thread-2] DEBUG com.gvisoc.hello.Service - Signal to shutdown -- Gracefully shutting down
+10:26:43.628 [Timer-0] INFO  com.gvisoc.hello.task.HelloTask - Hello, gvisoc!
+10:26:44.855 [com.gvisoc.hello.Start.main()] DEBUG com.gvisoc.hello.Start - Exiting with status: 0
 ```
 8. Check the service status with `sudo systemctl status hello.service -l`.
 
