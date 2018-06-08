@@ -53,11 +53,9 @@ Check this material:
 3. For further steps and check / improve portability, check [systemd unit packaging](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files)
 
 ## Limitations
-There is room for unexpected results as the RPM was created in a Mac by installing `rpm` with Homebrew:
+* There is room for unexpected results as the RPM was created in a Mac by installing `rpm` with Homebrew with `brew install rpm`
+* The result was tested only in CentOS 7.
+* No further limitations other than those derived from the design itself, and Windows rpm building. Although not tested / explored, this last can be done with a Cygwin environment or similar, or even with Ubuntu for Windows if you have Windows 10. 
 
-```brew install rpm```
-
-The result was tested only in CentOS 7.
-
-No further limitations other than those derived from the design itself. Feedback and pull requests are welcome.
+Feedback and pull requests are welcome.
 
