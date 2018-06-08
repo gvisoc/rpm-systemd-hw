@@ -1,7 +1,7 @@
 # RPM installing a Java "Hello Service" in systemd
 This repo creates a RPM package explicitly depending on Java (pulling the installation of Java >= 1.8 as a dependency), and setting up a systemd service for Red Hat Linux systems and similar (Fedora, CentOS,...). 
 
-It shows how to use environment variables for inject in the service configuration, and how to comply with Java exit values with systemd's expectations. This is done by coding Start and Stop commands that finish doing `System.exit(status)` calls with proper compliant statuses.
+It shows how to use environment variables for inject in the service configuration, and how to comply with Java exit values with systemd's expectations. This is done by coding Start and Stop commands that finish doing `System.exit(status)` calls with proper compliant statuses. These commands use JMX.
 
 ## Contents
 ### Java code
