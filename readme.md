@@ -37,7 +37,7 @@ The file reponsible for the configuration is `hello-service/pom.xml` and uses Mo
 19:06:33.071 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
 19:06:36.076 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
 ```
-7. Restart the service with sudo sytemctl restart hello`. Stop the service with `sudo systemctl stop hello`. Check the result in the log:
+7. Restart the service with `sudo sytemctl restart hello`. Stop the service with `sudo systemctl stop hello`. Check the result in the log:
 ```
 19:07:18.116 [Timer-0] INFO  com.gvisoc.hello.Service - Hello, gvisoc!
 19:07:19.132 [Thread-2] INFO  com.gvisoc.hello.Service - Exiting
