@@ -69,20 +69,16 @@ public class Start {
             }
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
-            LOGGER.error("Malformed object name. Exiting...");
-            e.printStackTrace();
+            LOGGER.error("Malformed object name. Exiting...", e);
             status = SYSTEM_ERROR_JMX_NAME;
         } catch (InstanceAlreadyExistsException e) {
-            LOGGER.error("Instance already exists. Exiting...");
-            e.printStackTrace();
+            LOGGER.error("Instance already exists. Exiting...",e);
             status = SYSTEM_ERROR_JMX_DUPLICATED_INSTANCE;
         } catch (MBeanRegistrationException e) {
-            LOGGER.error("Error registering stop listener. Exiting...");
-            e.printStackTrace();
+            LOGGER.error("Error registering stop listener. Exiting...", e);
             status = SYSTEM_ERROR_JMX_REGISTER;
         } catch (NotCompliantMBeanException e) {
-            LOGGER.error("Non-Compliant MBean. Exiting...");
-            e.printStackTrace();
+            LOGGER.error("Non-Compliant MBean. Exiting...", e);
             status = SYSTEM_ERROR_JMX_COMPLIANCE;
         }
         return status;
