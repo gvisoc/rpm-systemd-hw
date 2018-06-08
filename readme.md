@@ -9,7 +9,7 @@ The module `hello-service` contains a Maven project of a plain Java application 
 
 The process wrappers are two classes, `com.gvisoc.hello.Start` and `com.gvisoc.hello.Stop`. The first one creates the task and controls the timer, exposing a Management Bean (see `com.gviosc.hello.StopMonitor`) with a method `stop`. This method stop is called via JMX from `com.gvisoc.hello.Stop`. 
 
-The configuration of the process is dine via the Apache Commons library for configuration, in order to be able to refer environment variables written by an external file, set up in the Unit File (see [sytemd unit file](#systemd-unit-file) and [Use](#use)). This file is touched by the RPM installation process (defined in the Maven POM file, see [RPM configuration](#rpm-configuration)), o that is created if didn't exist. No environment variables are provided by default, that is something to be done with configuration managers like Ansible (to be explored).
+The configuration of the process is dine via the Apache Commons library for configuration, in order to be able to refer environment variables written by an external file, set up in the Unit File (see [sytemd unit file](#systemd-unit-file) and [Use](#use)). This file is touched by the RPM installation process (defined in the Maven POM file, see [RPM configuration](#rpm-configuration)), so that is created if didn't exist. No environment variables are provided by default, that is something to be done with configuration managers like Ansible (to be explored).
 
 ### Start and stop scripts
 Two scripts are located under `hello-service/src/main/resources`: `start.sh` and `stop.sh`.
