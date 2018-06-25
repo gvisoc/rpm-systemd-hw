@@ -7,7 +7,7 @@ It shows how to use environment variables for inject in the service configuratio
 ### Java code
 The module `hello-service` contains a Maven project of a plain Java application that executes a "Hello Task" every three seconds. This task (`com.gvisoc.task.Hello`) is a `TimerTask` and is wrapped in two operation commands that comply with the Exit codes expected by systemd (0 for OK, anything greater for other conditions).
 
-The process wrappers are two classes, `com.gvisoc.hello.Start` and `com.gvisoc.hello.Stop`. The first one creates the task and controls the timer, exposing a Management Bean (see `com.gviosc.hello.StopMonitor`) with a method `stop`. This method stop is called via JMX from `com.gvisoc.hello.Stop`. 
+The process wrappers are two classes, `com.gvisoc.hello.Start` and `com.gvisoc.hello.Stop`. The first one creates the task and controls the timer, exposing a Management Bean (see `com.gvisoc.hello.StopMonitor`) with a method `stop`. This method stop is called via JMX from `com.gvisoc.hello.Stop`. 
 
 The configuration of the process is dine via the Apache Commons library for configuration, in order to be able to refer environment variables written by an external file, set up in the Unit File (see [sytemd unit file](#systemd-unit-file) and [Use](#use)). This file is touched by the RPM installation process (defined in the Maven POM file, see [RPM configuration](#rpm-configuration)), so that is created if didn't exist. No environment variables are provided by default, that is something to be done with configuration managers like Ansible (to be explored).
 
