@@ -65,7 +65,7 @@
                 <version>2.2.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <group>Application</group>
+                    <group>Unspecified</group>
                     <targetOS>linux</targetOS>
                     <requires>
                         <require>java &gt;= 1.8.0</require>
