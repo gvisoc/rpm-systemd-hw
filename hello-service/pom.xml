@@ -65,6 +65,12 @@
                 <version>2.2.0</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <!-- This prevents RPM to recompress classes and jars, useful if you
+                        use a Spring uberjar, or if you ship a lot of jar dependencies -->
+                    <defineStatements>
+                        <defineStatement>_source_payload w0.gzdio</defineStatement>
+                        <defineStatement>_binary_payload w0.gzdio</defineStatement>
+                    </defineStatements>
                     <group>Unspecified</group>
                     <targetOS>linux</targetOS>
                     <requires>
@@ -75,6 +81,8 @@
                     </postinstallScriptlet>
                     <mappings>
                         <mapping>
+                            <username>gvisoc</username>
+                            <groupname>wheel</groupname>
                             <directory>/opt/hello/</directory>
                             <dependency/>
                             <sources>
