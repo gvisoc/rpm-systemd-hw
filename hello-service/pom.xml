@@ -90,7 +90,6 @@
                                     <location>target/classes/</location>
                                 </source>
                             </sources>
-                            <username>gvisoc</username>
                         </mapping>
                         <mapping>
                             <directory>/etc/systemd/system/</directory>
