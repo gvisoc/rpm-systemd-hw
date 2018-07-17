@@ -5,9 +5,11 @@ Description=Hello Service. This service says hello to the user in /tmp/hello.log
 # After=network.target
 
 [Service]
+User=gvisoc
+Group=wheel
 EnvironmentFile=/var/hello-environment.properties
 # Rather sure that this is not needed if you implement graceful stop --yes if killing
-PIDFile=/var/run/hello.pid
+PIDFile=/opt/hello/hello.pid
 ExecStart=/opt/hello/start.sh
 ExecStop=/opt/hello/stop.sh
 Type=forking

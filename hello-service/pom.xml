@@ -77,7 +77,7 @@
                         <require>java &gt;= 1.8.0</require>
                     </requires>
                     <postinstallScriptlet>
-                        <script>chmod uo+x /opt/hello/*.sh;touch /var/hello-environment.properties</script>
+                        <script>chmod ugo+x /opt/hello/*.sh;touch /var/hello-environment.properties</script>
                     </postinstallScriptlet>
                     <mappings>
                         <mapping>
