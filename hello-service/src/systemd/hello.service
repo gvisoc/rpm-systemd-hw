@@ -9,7 +9,7 @@ User=gvisoc
 Group=wheel
 EnvironmentFile=/var/hello-environment.properties
 # Rather sure that this is not needed if you implement graceful stop --yes if killing
-PIDFile=/opt/hello/hello.pid
+PIDFile=/var/run/hello.pid
 ExecStart=/opt/hello/start.sh
 ExecStop=/opt/hello/stop.sh
 Type=forking
