@@ -78,7 +78,12 @@
                     </requires>
                     <!-- this scriptlet runs as sudo (sudo yum install) or as root -->
                     <postinstallScriptlet>
-                        <script>chmod ugo+x /opt/hello/*.sh;touch /var/hello-environment.properties;touch /var/run/hello.pid;chown gvisoc:wheel /var/run/hello.pid</script>
+                        <script>
+                            chmod ugo+x /opt/hello/*.sh
+                            touch /var/hello-environment.properties
+                            touch /var/run/hello.pid
+                            chown gvisoc:wheel /var/run/hello.pid
+                        </script>
                     </postinstallScriptlet>
                     <mappings>
                         <mapping>
