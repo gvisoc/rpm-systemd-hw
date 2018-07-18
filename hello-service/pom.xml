@@ -4,7 +4,7 @@
     <groupId>com.gvisoc.hello</groupId>
     <artifactId>hello-service</artifactId>
     <packaging>rpm</packaging>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
     <name>Hello service</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -77,10 +77,24 @@
                         <require>java &gt;= 1.8.0</require>
                     </requires>
                     <!-- this scriptlet runs as sudo (sudo yum install) or as root -->
+                    <preinstallScriptlet>
+                        <script>
+                            if [ -f /tmp/hello.pid ]; then
+                                echo "Stopping previous service version"
+                                systemctl stop hello
+                            fi
+                        </script>
+                    </preinstallScriptlet>
                     <postinstallScriptlet>
                         <script>
                             chmod ugo+x /opt/hello/*.sh
                             touch /var/hello-environment.properties
+                            echo "Refreshing systemd services"
+                            systemctl daemon-reload
+                            echo "Starting service"
+                            systemctl start hello
+                            echo "Enabling boot time start"
+                            systemctl enable hello
                         </script>
                     </postinstallScriptlet>
                     <mappings>
