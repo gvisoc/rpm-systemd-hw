@@ -4,7 +4,7 @@
     <groupId>com.gvisoc.hello</groupId>
     <artifactId>hello-service</artifactId>
     <packaging>rpm</packaging>
-    <version>0.0.3</version>
+    <version>0.0.5</version>
     <name>Hello service</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -97,6 +97,14 @@
                             systemctl enable hello
                         </script>
                     </postinstallScriptlet>
+                    <preremoveScriptlet>
+                        <script>
+                            if [ -f /tmp/hello.pid ]; then
+                                echo "Stopping service before removal"
+                                systemctl stop hello
+                            fi
+                        </script>
+                    </preremoveScriptlet>
                     <mappings>
                         <mapping>
                             <username>gvisoc</username>
