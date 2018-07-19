@@ -71,12 +71,20 @@
                         <defineStatement>_source_payload w0.gzdio</defineStatement>
                         <defineStatement>_binary_payload w0.gzdio</defineStatement>
                     </defineStatements>
+
+                    <!-- Somehow these groups are deprecated, but not in all RPM-ish systems,
+                        so it is always good to have them defined at least as Unspecified -->
                     <group>Unspecified</group>
+
+                    <!-- I wonder if RPM can be used for other target OSes, but hey. -->
                     <targetOS>linux</targetOS>
+                    
+                    <!-- Java standalone process / Spring Uberjar -->
                     <requires>
                         <require>java &gt;= 1.8.0</require>
                     </requires>
-                    <!-- this scriptlet runs as sudo (sudo yum install) or as root -->
+
+                    <!-- These scriptlets run as sudo (sudo yum install) or as root -->
                     <preinstallScriptlet>
                         <script>
                             if [ -f /tmp/hello.pid ]; then
@@ -105,6 +113,8 @@
                             fi
                         </script>
                     </preremoveScriptlet>
+
+                    <!-- These mappings are the installation itself -->
                     <mappings>
                         <mapping>
                             <username>gvisoc</username>
